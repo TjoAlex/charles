@@ -20,8 +20,36 @@ const SpeechRecognition =
  recognition.onresult = function(event) {
      let current = event.resultIndex;
      let transcript = event.results[current][0].transcript;
-     // console.log(transcript);
-     readOut(transcript)
+     transcript = transcript.toLowerCase();
+     console.log(`my words: ${transcript}`);
+
+     if(transcript.includes("hej charles")){
+         readOut("hej");
+     }
+     if(transcript.includes("öppna youtube")){
+         readOut("öppnar youtube för dig nu");
+         window.open("https://www.youtube.com/");
+     }
+     if(transcript.includes("öppna google")){
+        readOut("öppnar google nu");
+        window.open("https://www.google.se/");
+    }
+    // google search 
+
+    if(transcript.includes("sök")){
+        readOut("här är dina resultat");
+        let input = transcript.split("");
+        input.splice(0, 11);
+        input.pop();
+        input = input.join("").split(" ").join("+");
+        console.log(input);
+        window.open(`https://www.google.se/search?q=${input}`)
+    }
+
+    if(transcript.includes("öppna mail")){
+        readOut("öppnar din mail");
+        window.open("https://outlook.live.com/mail/0/");
+    }
  };
 
  // sr Stop
@@ -47,7 +75,7 @@ const SpeechRecognition =
      // different voices
      // const allVoices = speechSynthesis.getVoices();
      speech.text = message;
-     // speech.voice = allVoices[36];
+     // speech.voice = allVoices[0];
      speech.volume = 1;
      window.speechSynthesis.speak(speech);
      console.log("speaking out");
